@@ -20,6 +20,16 @@ public class TestDaoImpl implements TestDao{
 	private static final String UPDATE_TEST_QUERY = "UPDATE TEST SET (libelle=? , description=?, duree=?, seuil_haut=?, seuil_bas=?) WHERE idTest =? ";
 	//private static final String DELETE_TEST_QUERY = "DELETE FROM QUESTION WHERE idQuestion =? ";
 	
+	private static TestDaoImpl instance;
+
+	public static TestDaoImpl getInstance() {
+		if (instance == null) {
+			instance = new TestDaoImpl();
+		}
+		return instance;
+	}
+
+	
 	@Override
 	public Test insert(Test test) throws DaoException {
 		Connection cnx = null;
