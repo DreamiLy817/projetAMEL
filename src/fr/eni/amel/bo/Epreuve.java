@@ -2,6 +2,12 @@ package fr.eni.amel.bo;
 
 
 import java.util.List;
+
+import fr.eni.amel.bo.Proposition;
+import fr.eni.amel.bo.QuestionTirage;
+import fr.eni.amel.bo.Test;
+import fr.eni.amel.bo.Utilisateur;
+
 import java.util.ArrayList;
 import java.util.Date;
 

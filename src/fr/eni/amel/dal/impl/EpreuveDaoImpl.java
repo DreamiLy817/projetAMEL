@@ -9,6 +9,8 @@ import java.util.List;
 
 import fr.eni.amel.bo.Epreuve;
 import fr.eni.amel.bo.QuestionTirage;
+import fr.eni.amel.bo.Test;
+import fr.eni.amel.bo.Utilisateur;
 import fr.eni.amel.dal.EpreuveDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
@@ -49,9 +51,8 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 			rqt.setInt(7, epreuve.getTest().getIdTest());
 			rqt.setInt(8, epreuve.getUtilisateur().getIdUtilisateur());
 			rqt.executeUpdate();
-		}finally{
-			if (rqt!=null) rqt.close();
-			if (cnx!=null) cnx.close();
+		} catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
 		}
 		return epreuve;
 	}
@@ -106,9 +107,14 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 				epreuve.setNiveau_obtenu(rs.getString("niveau_obtenu"));
 				
 				//Ajouter user
-				
+				UtilisateurDaoImpl utilisateurDao = UtilisateurDaoImpl.getInstance();
+				Utilisateur utilisateur = utilisateurDao.selectById(rs.getInt("idUtilisateur"));
+				epreuve.setUtilisateur(utilisateur);
 				
 				//Ajouter test
+				TestDaoImpl TestDao = TestDaoImpl.getInstance();
+				Test test = TestDao.selectById(rs.getInt("idTest"));
+				epreuve.setTest(test);
 				
 				//Ajouter Questions Tirages
 				QuestionTirageDaoImpl questionDao = QuestionTirageDaoImpl.getInstance();
