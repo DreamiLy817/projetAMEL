@@ -15,13 +15,14 @@ import fr.eni.amel.dal.EpreuveDAO;
 import fr.eni.amel.test.bo.ConnectBDD;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
+import fr.eni.tp.web.common.util.ResourceUtil;
 
 public class EpreuveDaoImpl implements EpreuveDAO{
 
 	private static final String select_all = "SELECT * FROM EPREUVE";
 	private static final String select_id 	= "SELECT * FROM EPREUVE WHERE idEpreuve = ?";
-	private static final String update_id 	= "UPDATE EPREUVE SET dateDebutValidite = ?, dateFinValidite = ?, tempsEcoule = ?, etat = ?, note_obtenue = ? WHERE idEpreuve = ?";
-	private static final String insert 	= "INSERT INTO EPREUVE (dateDebutValidite, dateFinValidite, tempsEcoule, etat, note_obtenue, niveau_obtenu, idTest, idUtilisateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String update_id 	= "UPDATE EPREUVE SET dateDedutValidite = ?, dateFinValidite = ?, tempsEcoule = ?, etat = ?, note_obtenue = ? WHERE idEpreuve = ?";
+	private static final String insert 	= "INSERT INTO EPREUVE (dateDedutValidite, dateFinValidite, tempsEcoule, etat, note_obtenue, niveau_obtenu, idTest, idUtilisateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	private Connection connection;
 	private static EpreuveDaoImpl instance;
@@ -51,7 +52,7 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 		Epreuve epreuve = (Epreuve)element;
 		
 		try{
-			cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
 			rqt=cnx.prepareStatement(insert);
 			rqt.setDate(1, new java.sql.Date(epreuve.getDateDebutValidite().getTime()));
 			rqt.setDate(2, new java.sql.Date(epreuve.getDateFinValidite().getTime()));
@@ -76,7 +77,7 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 		PreparedStatement rqt=null;
 		
 		try{
-			cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
 			rqt=cnx.prepareStatement(update_id);
 			rqt.setDate(1, new java.sql.Date(epreuve.getDateDebutValidite().getTime()));
 			rqt.setDate(2, new java.sql.Date(epreuve.getDateFinValidite().getTime()));
@@ -183,14 +184,8 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 			throw new DaoException(e.getMessage(), e);
 		}finally
 		{
-				try {
-					if(rqt != null) rqt.close();
-					if(cnx != null) cnx.close();
-				} catch (SQLException e) {
-		
-					e.printStackTrace();
-				}
-			
+			ResourceUtil.safeClose(rs, rqt, cnx);
+			connection = null;
 		}
 		return epreuves;
 	} 	
