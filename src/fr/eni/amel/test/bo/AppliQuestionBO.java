@@ -10,12 +10,14 @@ import fr.eni.amel.bo.Theme;
 public class AppliQuestionBO {
 
 	public static void main(String[] args) {
-		// Création d'une question avec un thème
+		
+		// Test question sans propositions
 		
 		Theme theme1 = new Theme(1,"POO");                                       
 		Question question1 = new Question(1,"Test question1 sans propositions",null,2L,theme1);
 		System.out.println(question1);
-		//Ajout de proposition
+		
+		//Test question avec propositions
 		
 		Proposition proposition1 = new Proposition(1,"test proposition1 ",true,question1);
 	
