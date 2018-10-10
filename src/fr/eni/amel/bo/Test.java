@@ -57,6 +57,15 @@ public class Test {
 	public Test() {
 	}
 	
+	public Test(int idTest, String libelle, String description, int duree, int seuil_haut, int seuil_bas) {
+		setIdTest(idTest);
+		setLibelle(libelle);
+		setDescription(description);
+		setDuree(duree);
+		setSeuil_bas(seuil_bas);
+		setSeuil_haut(seuil_haut);
+	}
+	
 	public Test(String libelle, String description, int duree, int seuil_haut, int seuil_bas) {
 		setLibelle(libelle);
 		setDescription(description);
