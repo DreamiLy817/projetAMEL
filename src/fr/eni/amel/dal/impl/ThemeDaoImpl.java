@@ -2,6 +2,7 @@ package fr.eni.amel.dal.impl;
 
 import java.util.List;
 
+import fr.eni.amel.bo.Theme;
 import fr.eni.amel.dal.ThemeDao;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 
@@ -23,13 +24,13 @@ public class ThemeDaoImpl  implements ThemeDao{
 	}
 
 	@Override
-	public ThemeDao insert(ThemeDao element) throws DaoException {
+	public Theme insert(Theme element) throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void update(ThemeDao element) throws DaoException {
+	public void update(Theme element) throws DaoException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -41,15 +42,19 @@ public class ThemeDaoImpl  implements ThemeDao{
 	}
 
 	@Override
-	public ThemeDao selectById(Integer id) throws DaoException {
+	public Theme selectById(Integer id) throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ThemeDao> selectAll() throws DaoException {
+	public List<Theme> selectAll() throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+
+
 
 }
