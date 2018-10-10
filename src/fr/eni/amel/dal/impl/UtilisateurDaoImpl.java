@@ -75,6 +75,12 @@ public class UtilisateurDaoImpl implements UtilisateurDao{
 			
 			cnx = MSSQLConnectionFactory.get();
 			stmt = cnx.prepareStatement(UPDATE_UTIL_QUERY);
+			stmt.setString(1,utilisateur.getNom());
+			stmt.setString(2, utilisateur.getPrenom());
+			stmt.setString(3, utilisateur.getEmail());
+			stmt.setString(4, utilisateur.getPassword());
+			stmt.setInt(5, utilisateur.getProfil().getCodeProfil());
+			stmt.setInt(6, utilisateur.getPromo().getCodePromo());
 			
 			
 		} catch(SQLException e) {
