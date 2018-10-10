@@ -1,5 +1,6 @@
 package fr.eni.amel.dal.factory;
 
+import fr.eni.amel.bo.SectionTest;
 import fr.eni.amel.dal.PropositionDao;
 import fr.eni.amel.dal.QuestionDao;
 import fr.eni.amel.dal.TestDao;
@@ -19,6 +20,9 @@ public class DaoFactory {
 	public static ThemeDao getThemeDao() {
 		return ThemeDaoImpl.getInstance();
 		
+	}
+	public static SectionTestDao getSectionDao() {
+		return SectionTestDaoImpl.getInstance();
 	}
 
 	public static PropositionDao propositionDAO() {
