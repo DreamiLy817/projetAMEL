@@ -156,8 +156,14 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 				epreuve.setNiveau_obtenu(rs.getString("niveau_obtenu"));
 				
 				//Ajouter user
+				UtilisateurDaoImpl utilisateurDao = UtilisateurDaoImpl.getInstance();
+				Utilisateur utilisateur = utilisateurDao.selectById(rs.getInt("idUtilisateur"));
+				epreuve.setUtilisateur(utilisateur);
 				
 				//Ajouter test
+				TestDaoImpl TestDao = TestDaoImpl.getInstance();
+				Test test = TestDao.selectById(rs.getInt("idTest"));
+				epreuve.setTest(test);
 				
 				epreuves.add(epreuve);
 			}
