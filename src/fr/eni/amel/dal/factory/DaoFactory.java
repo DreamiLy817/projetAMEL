@@ -29,9 +29,8 @@ public class DaoFactory {
 		return QuestionDaoImpl.getInstance();
 	}
  	
- 	public static UtilisateurDao utilisateurDao() {
-		UtilisateurDao utilisateurDAO = new UtilisateurDaoImpl();
- 		return utilisateurDAO;
+ 	public static UtilisateurDao getUtilisateurDao() {
+ 		return UtilisateurDaoImpl.getInstance();
  		
  	}
 }

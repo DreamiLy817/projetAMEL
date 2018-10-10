@@ -130,7 +130,7 @@ public class Utilisateur {
 	@Override
 	public String toString() {
 		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", nom=" + nom + ", prenom=" + prenom + ", email="
-				+ email + ", password=" + password + "]";
+				+ email + ", password=" + password +  ", profil=" + profil + ", promo=" +  promo + " ]";
 	}
 	
 	

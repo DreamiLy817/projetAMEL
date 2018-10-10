@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import fr.eni.amel.bo.Utilisateur;
 import fr.eni.amel.dal.UtilisateurDao;
@@ -140,7 +142,31 @@ public class UtilisateurDaoImpl implements UtilisateurDao{
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		List<Utilisateur> listeUtilisateurs = null;
+		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
+		Utilisateur unUtil = null;
+		
+		try {
+			cnx = MSSQLConnectionFactory.get();
+			stmt = cnx.prepareStatement(SELECT_ALL_UTILS);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				unUtil = new Utilisateur();
+				unUtil.setIdUtilisateur(rs.getInt("idUtilisateur"));
+				unUtil.setNom(rs.getString(rs.getString("nom")));
+				unUtil.setPrenom(rs.getString("prenom"));
+				unUtil.setEmail(rs.getString("email"));
+				unUtil.setPassword(rs.getString("password"));
+				
+				listeUtilisateurs.add(unUtil);
+				
+			}
+			
+		} catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			ResourceUtil.safeClose(rs, stmt, cnx);
+		}
 		
 		return listeUtilisateurs;
 	}
