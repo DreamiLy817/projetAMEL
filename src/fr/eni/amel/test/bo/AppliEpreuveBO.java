@@ -31,7 +31,7 @@ public class AppliEpreuveBO {
 				Profil profil = new Profil(3, "interne");
 				System.out.println(profil);
 				
-				Utilisateur utilisateur1 = new Utilisateur(2, "Grappin", "Emmy", "b@b.com", "test05", profil, promo);
+				Utilisateur utilisateur1 = new Utilisateur(2, "Grapin", "Emmy", "b@b.com", "test05", profil, promo);
 				System.out.println(utilisateur1);
 				
 				Epreuve epreuve = new Epreuve(4, new Date(),  new Date(), 0, "ET", 82F, test1, utilisateur1, "A");
