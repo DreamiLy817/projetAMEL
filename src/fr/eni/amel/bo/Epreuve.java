@@ -2,6 +2,12 @@ package fr.eni.amel.bo;
 
 
 import java.util.List;
+
+import fr.eni.amel.bo.Proposition;
+import fr.eni.amel.bo.QuestionTirage;
+import fr.eni.amel.bo.Test;
+import fr.eni.amel.bo.Utilisateur;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -146,6 +152,17 @@ public class Epreuve {
 	{
 		return this.listeQuestionTirage.get(index);
 	}
+
+	@Override
+	public String toString() {
+		return "Epreuve [idEpreuve=" + idEpreuve + ", dateDebutValidite=" + dateDebutValidite + ", dateFinValidite="
+				+ dateFinValidite + ", tempsEcoule=" + tempsEcoule + ", etat=" + etat + ", note_obtenue=" + note_obtenue
+				+ ", niveau_obtenu=" + niveau_obtenu + ", test=" + test + ", utilisateur=" + utilisateur
+				+ ", listeQuestionTirage=" + listeQuestionTirage + ", proposition=" + proposition + "]";
+	}
+	
+	
+	
 	
 	
 }
