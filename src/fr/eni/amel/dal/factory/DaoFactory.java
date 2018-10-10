@@ -4,10 +4,12 @@ import fr.eni.amel.dal.PropositionDao;
 import fr.eni.amel.dal.QuestionDao;
 import fr.eni.amel.dal.TestDao;
 import fr.eni.amel.dal.ThemeDao;
+import fr.eni.amel.dal.UtilisateurDao;
 import fr.eni.amel.dal.impl.PropositionDaoImpl;
 import fr.eni.amel.dal.impl.QuestionDaoImpl;
 import fr.eni.amel.dal.impl.TestDaoImpl;
 import fr.eni.amel.dal.impl.ThemeDaoImpl;
+import fr.eni.amel.dal.impl.UtilisateurDaoImpl;
 
 public class DaoFactory {
 	
@@ -26,4 +28,10 @@ public class DaoFactory {
  	public static QuestionDao questionDAO() {
 		return QuestionDaoImpl.getInstance();
 	}
+ 	
+ 	public static UtilisateurDao utilisateurDao() {
+		UtilisateurDao utilisateurDAO = new UtilisateurDaoImpl();
+ 		return utilisateurDAO;
+ 		
+ 	}
 }
