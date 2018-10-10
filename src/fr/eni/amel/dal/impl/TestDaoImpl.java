@@ -1,4 +1,4 @@
-package fr.eni.amel.dal.impl;
+ package fr.eni.amel.dal.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,15 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.amel.bo.Proposition;
-import fr.eni.amel.bo.Question;
 import fr.eni.amel.bo.Test;
 import fr.eni.amel.dal.TestDao;
-import fr.eni.amel.dal.factory.DaoFactory;
 import fr.eni.amel.test.bo.ConnectBDD;
 import fr.eni.tp.web.common.dal.exception.DaoException;
-import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
-import fr.eni.tp.web.common.util.ResourceUtil;
 
 //idTest,libelle,description,duree,seuil_haut,seuil_bas
 public class TestDaoImpl implements TestDao{
@@ -113,6 +108,8 @@ public class TestDaoImpl implements TestDao{
 			rqt.setInt(3, test.getDuree());
 			rqt.setInt(4, test.getSeuil_haut());
 			rqt.setInt(5, test.getSeuil_bas());
+			//a debugger peut etre 
+			rqt.setInt(6, test.getIdTest());
 	
 			rqt.executeUpdate();
 
