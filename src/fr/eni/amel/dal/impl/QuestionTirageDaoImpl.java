@@ -40,7 +40,7 @@ public static QuestionTirageDaoImpl getInstance() {
 		try{
 			cnx = MSSQLConnectionFactory.get();
 			rqt=cnx.prepareStatement(insert);
-			rqt.setBoolean(1, tirage.isEstmarqué());
+			rqt.setBoolean(1, tirage.isEstmarquee());
 			rqt.setInt(2,tirage.getQuestion().getIdQuestion());
 			rqt.setInt(3, tirage.getNumordre());
 			rqt.setInt(4, tirage.getEpreuve().getIdEpreuve());
@@ -86,7 +86,7 @@ public static QuestionTirageDaoImpl getInstance() {
 			// SI on trouve au moins 1 r�sultat, on prend le 1er pour mettre � jour les informations de l'animateur utilis� pour la recherche.
 			while(rs.next()){
 				question_tirage = new QuestionTirage();
-				question_tirage.setEstmarqué(rs.getBoolean("estMarquee"));;
+				question_tirage.setEstmarquee(rs.getBoolean("estMarquee"));;
 				question_tirage.setNumordre(rs.getInt("numordre"));
 				
 				//Ajouter epreuve
@@ -128,7 +128,7 @@ public static QuestionTirageDaoImpl getInstance() {
 			// SI on trouve au moins 1 r�sultat, on prend le 1er pour mettre � jour les informations de l'animateur utilis� pour la recherche.
 			while(rs.next()){
 				question_tirage = new QuestionTirage();
-				question_tirage.setEstmarqué(rs.getBoolean("estMarquee"));;
+				question_tirage.setEstmarquee(rs.getBoolean("estMarquee"));;
 				question_tirage.setNumordre(rs.getInt("numordre"));
 				
 				//Ajouter epreuve

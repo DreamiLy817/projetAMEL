@@ -2,7 +2,7 @@ package fr.eni.amel.bo;
 
 public class QuestionTirage {
 	
-	private boolean estmarqué;
+	private boolean estmarquee;
 	private Question question;
 	private int numordre;
 	private Epreuve epreuve;
@@ -14,9 +14,9 @@ public class QuestionTirage {
 		
 	}
 	
-	public QuestionTirage(boolean estmarqué, Question question, int numordre, Epreuve epreuve,
+	public QuestionTirage(boolean estmarquee, Question question, int numordre, Epreuve epreuve,
 			Proposition proposition) {
-		this.estmarqué = estmarqué;
+		this.estmarquee = estmarquee;
 		this.question = question;
 		this.numordre = numordre;
 		this.epreuve = epreuve;
@@ -25,8 +25,8 @@ public class QuestionTirage {
 
 	//Getter
 	
-	public boolean isEstmarqué() {
-		return estmarqué;
+	public boolean isEstmarquee() {
+		return this.estmarquee;
 	}
 
 	public Question getQuestion() {
@@ -48,8 +48,8 @@ public class QuestionTirage {
 	
 	//Setter
 
-	public void setEstmarqué(boolean estmarqué) {
-		this.estmarqué = estmarqué;
+	public void setEstmarquee(boolean estmarquee) {
+		this.estmarquee = estmarquee;
 	}
 
 	public void setQuestion(Question question) {
