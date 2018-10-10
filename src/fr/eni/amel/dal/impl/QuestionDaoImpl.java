@@ -10,10 +10,11 @@ import java.util.List;
 
 import fr.eni.amel.bo.Proposition;
 import fr.eni.amel.bo.Question;
+import fr.eni.amel.bo.Theme;
 import fr.eni.amel.dal.QuestionDao;
 import fr.eni.amel.dal.factory.DaoFactory;
+import fr.eni.amel.test.bo.ConnectBDD;
 import fr.eni.tp.web.common.dal.exception.DaoException;
-import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
 import fr.eni.tp.web.common.util.ResourceUtil;
 
 public class QuestionDaoImpl implements QuestionDao {
@@ -25,12 +26,21 @@ public class QuestionDaoImpl implements QuestionDao {
 	private static final String DELETE_QUESTION_QUERY = "DELETE FROM QUESTION WHERE idQuestion =? ";
 
 	private static QuestionDaoImpl instance;
+	private Connection connection;
 
 	public static QuestionDaoImpl getInstance() {
 		if (instance == null) {
 			instance = new QuestionDaoImpl();
 		}
 		return instance;
+	}
+
+	public Connection getConnection() throws SQLException {
+		// test la connexion si null
+		if (connection == null) {
+			connection = ConnectBDD.jdbcConnexion();
+		}
+		return connection;
 	}
 
 	@Override
@@ -40,12 +50,13 @@ public class QuestionDaoImpl implements QuestionDao {
 		ResultSet resultSet = null;
 
 		try {
-			connection = MSSQLConnectionFactory.get();
+			// connection = MSSQLConnectionFactory.get();
+			connection = getConnection();
 			statement = connection.prepareStatement(INSERT_QUESTION_QUERY, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, question.getEnonce());
 			statement.setString(2, question.getMedia());
 			statement.setLong(3, question.getPoints());
-			statement.setInt(4, idTheme);
+			statement.setInt(4, question.getTheme().getIdTheme());
 			if (statement.executeUpdate() == 1) {
 				resultSet = statement.getGeneratedKeys();
 				if (resultSet.next()) {
@@ -67,12 +78,13 @@ public class QuestionDaoImpl implements QuestionDao {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
-			connection = MSSQLConnectionFactory.get();
+			// connection = MSSQLConnectionFactory.get();
+			connection = getConnection();
 			statement = connection.prepareStatement(UPDATE_QUESTION_QUERY, question.getIdQuestion());
 			statement.setString(1, question.getEnonce());
 			statement.setString(2, question.getMedia());
 			statement.setLong(3, question.getPoints());
-			statement.setInt(4, question.getTheme());
+			statement.setInt(4, question.getTheme().getIdTheme());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -89,7 +101,8 @@ public class QuestionDaoImpl implements QuestionDao {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
-			connection = MSSQLConnectionFactory.get();
+			// connection = MSSQLConnectionFactory.get();
+			connection = getConnection();
 			statement = connection.prepareStatement(DELETE_QUESTION_QUERY);
 			statement.setInt(1, id);
 			statement.executeUpdate();
@@ -107,9 +120,11 @@ public class QuestionDaoImpl implements QuestionDao {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		Question question = null;
-		List<Proposition> listePropositions= new ArrayList();
+		List<Proposition> listePropositions = new ArrayList();
+		Theme theme = null;
 		try {
-			connection = MSSQLConnectionFactory.get();
+			// connection = MSSQLConnectionFactory.get();
+			connection = getConnection();
 			statement = connection.prepareStatement(SELECT_QUESTION_QUERY);
 			statement.setInt(1, id);
 
@@ -121,10 +136,11 @@ public class QuestionDaoImpl implements QuestionDao {
 				question.setIdQuestion(id);
 				question.setMedia(resultSet.getString("media"));
 				question.setPoints(resultSet.getLong("points"));
-				question.setTheme(resultSet.getInt("idTheme"));
+				theme = DaoFactory.getThemeDao().selectById(resultSet.getInt("idTheme"));
+				question.setTheme(theme);
 				listePropositions = DaoFactory.propositionDAO().listePropositionsParQuestion(id);
 				question.setListePropositions(listePropositions);
-			
+
 			}
 
 		} catch (SQLException e) {
@@ -145,10 +161,12 @@ public class QuestionDaoImpl implements QuestionDao {
 		ResultSet resultSet = null;
 		Integer questionId = null;
 		Question question = null;
+		Theme theme = null;
 		List<Proposition> listePropositions = new ArrayList();
-		
+
 		try {
-			connection = MSSQLConnectionFactory.get();
+			// connection = MSSQLConnectionFactory.get();
+			connection = getConnection();
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(SELECT_ALL_QUESTIONS);
 
@@ -158,7 +176,8 @@ public class QuestionDaoImpl implements QuestionDao {
 				question.setIdQuestion(resultSet.getInt("idQuestion"));
 				question.setMedia(resultSet.getString("media"));
 				question.setPoints(resultSet.getLong("points"));
-				question.setTheme(resultSet.getInt("idTheme"));
+				theme = DaoFactory.getThemeDao().selectById(resultSet.getInt("idTheme"));
+				question.setTheme(theme);
 				listePropositions = DaoFactory.propositionDAO().listePropositionsParQuestion(question.getIdQuestion());
 				question.setListePropositions(listePropositions);
 				listeQuestions.add(question);

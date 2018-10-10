@@ -1,5 +1,6 @@
 package fr.eni.amel.test.bo;
 
+import fr.eni.amel.bo.Question;
 import fr.eni.amel.bo.Test;
 import fr.eni.amel.dal.TestDao;
 import fr.eni.amel.dal.factory.DaoFactory;
@@ -23,5 +24,7 @@ public class AppliTestBO {
 				
 	
 
+				
+			
 	}
 }
