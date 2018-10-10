@@ -1,5 +1,6 @@
 package fr.eni.amel.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Question {
@@ -9,16 +10,26 @@ public class Question {
 	private String media;
 	private Long points;
 	private Theme theme;
-	private List<Proposition> listePropositions;
+	private List<Proposition> listePropositions = new ArrayList<Proposition>();
 
 	public Question() {
 
 	}
 
-	public Question(Integer idQuestion, String enonce, Long points, Theme theme, List<Proposition> listePropositions) {
-		super();
+	public Question(Integer idQuestion, String enonce, String media, Long points, Theme theme) {
+	
 		this.idQuestion = idQuestion;
 		this.enonce = enonce;
+		this.media = media;
+		this.points = points;
+		this.theme = theme;
+	}
+
+	public Question(Integer idQuestion, String enonce, String media, Long points, Theme theme, List<Proposition> listePropositions) {
+		
+		this.idQuestion = idQuestion;
+		this.enonce = enonce;
+		this.media = media;
 		this.points = points;
 		this.theme = theme;
 		this.listePropositions = listePropositions;
@@ -75,10 +86,12 @@ public class Question {
 	public void addProposition(Proposition proposition){
 		this.listePropositions.add(proposition);
 	}
+
 	@Override
 	public String toString() {
-		return String.format("Question [idQuestion=%s, enonce=%s, media=%s, points=%s]", idQuestion, enonce, media,
-				points);
+		return String.format("Question [idQuestion=%s, enonce=%s, media=%s, points=%s, theme=%s, listePropositions=%s]",
+				idQuestion, enonce, media, points, theme, listePropositions);
 	}
+	
 
 }

@@ -5,21 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.amel.bo.Proposition;
+import fr.eni.amel.bo.Question;
 import fr.eni.amel.bo.Test;
 import fr.eni.amel.dal.TestDao;
+import fr.eni.amel.dal.factory.DaoFactory;
+import fr.eni.amel.test.bo.ConnectBDD;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
+import fr.eni.tp.web.common.util.ResourceUtil;
 
 //idTest,libelle,description,duree,seuil_haut,seuil_bas
 public class TestDaoImpl implements TestDao{
 	private static final String INSERT_TEST_QUERY = "INSERT INTO TEST(libelle, description, duree, seuil_haut, seuil_bas) VALUES(?,?,?,?,?)";
-	//private static final String SELECT_TEST_QUERY = "SELECT idTest, libelle, description, duree, seuil_haut, seuil_bas FROM QUESTION q WHERE q.idQuestion=?";
-	//private static final String SELECT_ALL_TEST = "SELECT q.idQuestion, q.enonce, q.media, q.points, q.idTheme FROM QUESTION q";
+	private static final String SELECT_TEST_QUERY = "SELECT idTest, libelle, description, duree, seuil_haut, seuil_bas FROM TEST  WHERE .idTest=?";
+	private static final String SELECT_ALL_TEST = "SELECT idTest,libelle, description, duree, seuil_haut, seuil_bas FROM TEST";
 	private static final String UPDATE_TEST_QUERY = "UPDATE TEST SET (libelle=? , description=?, duree=?, seuil_haut=?, seuil_bas=?) WHERE idTest =? ";
-	//private static final String DELETE_TEST_QUERY = "DELETE FROM QUESTION WHERE idQuestion =? ";
+	private static final String DELETE_TEST_QUERY = "DELETE FROM TEST WHERE idTest =? ";
 	
+	private Connection connection;
 	private static TestDaoImpl instance;
 
 	public static TestDaoImpl getInstance() {
@@ -27,6 +34,15 @@ public class TestDaoImpl implements TestDao{
 			instance = new TestDaoImpl();
 		}
 		return instance;
+	}
+	
+	public Connection getConnection() throws SQLException 
+	{
+		//test la connexion si null
+		if(connection == null) {
+			connection = ConnectBDD.jdbcConnexion();
+		}
+			return connection;
 	}
 
 	
@@ -37,7 +53,8 @@ public class TestDaoImpl implements TestDao{
 		ResultSet rs = null;
 
 		try {
-			cnx = MSSQLConnectionFactory.get();
+			//cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
 			rqt = cnx.prepareStatement(INSERT_TEST_QUERY , Statement.RETURN_GENERATED_KEYS);
 
 			String libelle = test.getLibelle();
@@ -87,7 +104,8 @@ public class TestDaoImpl implements TestDao{
 		Connection cnx = null;
 		PreparedStatement rqt = null;
 		try {
-			cnx = MSSQLConnectionFactory.get();
+			//cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
 			rqt = cnx.prepareStatement(UPDATE_TEST_QUERY);
 		
 			rqt.setString(1, test.getLibelle());
@@ -116,20 +134,120 @@ public class TestDaoImpl implements TestDao{
 
 	@Override
 	public void delete(Integer id) throws DaoException {
-		
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		try {
+			//cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
+			rqt = cnx.prepareStatement(DELETE_TEST_QUERY);
+			rqt.setInt(1, id);
+			rqt.executeUpdate();
+		} catch (SQLException e) {
+			// TO DO DALException
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			try {
+				if (rqt != null) {
+					rqt.close();
+				}
+				if (cnx != null) {
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
 	@Override
 	public Test selectById(Integer id) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		Test test = null;
+		
+		try {
+			//cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
+			rqt = cnx.prepareStatement(SELECT_TEST_QUERY);
+			rqt.setInt(1, id);
+
+			rs = rqt.executeQuery();
+
+			if (rs.next()) {
+				test = new Test();
+				test.setIdTest(id);
+				test.setLibelle(rs.getString("libelle"));
+				test.setDescription(rs.getString("description"));
+				test.setSeuil_haut(rs.getInt("seuil_haut"));
+				test.setSeuil_bas(rs.getInt("seuil_bas"));
+				test.setDuree(rs.getInt("duree"));
+			
+			}
+
+		}  catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (rqt != null) {
+					rqt.close();
+				}
+				if (cnx != null) {
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return test;
 	}
 
 	@Override
 	public List<Test> selectAll() throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection cnx = null;
+		Statement rqt = null;
+		ResultSet rs = null; 
+		List<Test> listeTest = new ArrayList<Test>();
+		
+		try {
+			//cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
+			rqt = cnx.createStatement();
+			rs = rqt.executeQuery(SELECT_ALL_TEST);
+			Test test = null; 
+			
+			while(rs.next()) {
+				test = new Test(rs.getInt("idTest"),
+						rs.getString("libelle"),
+						rs.getString("description"),
+						rs.getInt("duree"),
+						rs.getInt("seuil_haut"),
+						rs.getInt("seuil_bas"));
+				
+				listeTest.add(test);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				throw new DaoException(e.getMessage(), e);
+			}
+		}
+		return listeTest;
 	}
 
 }

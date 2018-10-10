@@ -1,7 +1,9 @@
 package fr.eni.amel.dal.factory;
 
+import fr.eni.amel.bo.SectionTest;
 import fr.eni.amel.dal.PropositionDao;
 import fr.eni.amel.dal.QuestionDao;
+import fr.eni.amel.dal.SectionTestDao;
 import fr.eni.amel.dal.TestDao;
 import fr.eni.amel.dal.ThemeDao;
 import fr.eni.amel.dal.ProfilDao;
@@ -11,6 +13,7 @@ import fr.eni.amel.dal.impl.ProfilDaoImpl;
 import fr.eni.amel.dal.impl.PromotionDaoImpl;
 import fr.eni.amel.dal.impl.PropositionDaoImpl;
 import fr.eni.amel.dal.impl.QuestionDaoImpl;
+import fr.eni.amel.dal.impl.SectionTestDaoImpl;
 import fr.eni.amel.dal.impl.TestDaoImpl;
 import fr.eni.amel.dal.impl.ThemeDaoImpl;
 import fr.eni.amel.dal.impl.UtilisateurDaoImpl;
@@ -23,6 +26,9 @@ public class DaoFactory {
 	public static ThemeDao getThemeDao() {
 		return ThemeDaoImpl.getInstance();
 		
+	}
+	public static SectionTestDao getSectionDao() {
+		return SectionTestDaoImpl.getInstance();
 	}
 
 	public static PropositionDao propositionDAO() {
