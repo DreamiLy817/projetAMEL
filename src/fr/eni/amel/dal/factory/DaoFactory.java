@@ -4,7 +4,11 @@ import fr.eni.amel.dal.PropositionDao;
 import fr.eni.amel.dal.QuestionDao;
 import fr.eni.amel.dal.TestDao;
 import fr.eni.amel.dal.ThemeDao;
+import fr.eni.amel.dal.ProfilDao;
+import fr.eni.amel.dal.PromotionDao;
 import fr.eni.amel.dal.UtilisateurDao;
+import fr.eni.amel.dal.impl.ProfilDaoImpl;
+import fr.eni.amel.dal.impl.PromotionDaoImpl;
 import fr.eni.amel.dal.impl.PropositionDaoImpl;
 import fr.eni.amel.dal.impl.QuestionDaoImpl;
 import fr.eni.amel.dal.impl.TestDaoImpl;
@@ -31,6 +35,13 @@ public class DaoFactory {
  	
  	public static UtilisateurDao getUtilisateurDao() {
  		return UtilisateurDaoImpl.getInstance();
- 		
+ 	}
+ 	
+ 	public static ProfilDao getProfilDao() {
+ 		return ProfilDaoImpl.getInstance();
+ 	}
+ 	
+ 	public static PromotionDao getPromotionDao() {
+ 		return PromotionDaoImpl.getInstance();
  	}
 }

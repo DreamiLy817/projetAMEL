@@ -8,7 +8,7 @@ public class Promotion {
 	private String libelle;
 	private List<Utilisateur> listeUtilisateurs;
 	
-	private Promotion() {
+	public Promotion() {
 	}
 
 	public Promotion(int codePromo, String libelle) {

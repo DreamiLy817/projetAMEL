@@ -9,23 +9,22 @@ import java.util.List;
 
 import fr.eni.amel.bo.Profil;
 import fr.eni.amel.bo.Promotion;
-import fr.eni.amel.bo.Utilisateur;
-import fr.eni.amel.dal.ProfilDao;
+import fr.eni.amel.dal.PromotionDao;
 import fr.eni.amel.test.bo.ConnectBDD;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.util.ResourceUtil;
 
-public class ProfilDaoImpl implements ProfilDao {
+public class PromotionDaoImpl implements PromotionDao{
 
-	private static final String SELECT_PROFIL_QUERY = "SELECT p.codeProfil, p.libelle FROM PROFIL p WHERE p.codeProfil = ?";
-private static final String SELECT_ALL_PROFIL = "SELECT p.codeProfil, p.libelle FROM PROFIL p";
+	private static final String SELECT_PROMO_QUERY = "SELECT p.codePromo, p.libelle FROM PROMOTION p WHERE p.codePromo = ?";
+	private static final String SELECT_ALL_PROMO = "SELECT p.codePromo, p.libelle FROM PROMOTION p";
 	
 	private Connection connection;
-	private static ProfilDaoImpl instance;
+	private static PromotionDaoImpl instance;
 
-	public static ProfilDaoImpl getInstance() {
+	public static PromotionDaoImpl getInstance() {
 		if (instance == null) {
-			instance = new ProfilDaoImpl();
+			instance = new PromotionDaoImpl();
 		}
 		return instance;
 	}
@@ -39,15 +38,14 @@ private static final String SELECT_ALL_PROFIL = "SELECT p.codeProfil, p.libelle 
 			return connection;
 	}
 	
-	
 	@Override
-	public Profil insert(Profil element) throws DaoException {
+	public Promotion insert(Promotion element) throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void update(Profil element) throws DaoException {
+	public void update(Promotion element) throws DaoException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -59,24 +57,24 @@ private static final String SELECT_ALL_PROFIL = "SELECT p.codeProfil, p.libelle 
 	}
 
 	@Override
-	public Profil selectById(Integer id) throws DaoException {
-		
+	public Promotion selectById(Integer id) throws DaoException {
+
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		Profil profil = null;
+		Promotion promo = null;
 		
 		try {
 			
 			cnx = getConnection();
-			stmt = cnx.prepareStatement(SELECT_PROFIL_QUERY);
+			stmt = cnx.prepareStatement(SELECT_PROMO_QUERY);
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 			
 			if (rs.next()) {
-				profil = new Profil();
-				profil.setCodeProfil(id);
-				profil.setLibelle(rs.getString("libelle"));
+				promo = new Promotion();
+				promo.setCodePromo(id);
+				promo.setLibelle(rs.getString("libelle"));
 			}
 		} catch (Exception e) {
 			throw new DaoException(e.getMessage(), e);
@@ -93,30 +91,30 @@ private static final String SELECT_ALL_PROFIL = "SELECT p.codeProfil, p.libelle 
 			}
 		}
 		
-		return profil;
+		return promo;
 	}
 
 	@Override
-	public List<Profil> selectAll() throws DaoException {
+	public List<Promotion> selectAll() throws DaoException {
 		
 		Connection cnx = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		List<Profil> listeProfils = new ArrayList<Profil>();
-		Profil profil = null;
+		List<Promotion> listePromos = new ArrayList<Promotion>();
+		Promotion promo = null;
 		
 		try {
 //			cnx = MSSQLConnectionFactory.get();
 			cnx = getConnection();
-			stmt = cnx.prepareStatement(SELECT_ALL_PROFIL);
+			stmt = cnx.prepareStatement(SELECT_ALL_PROMO);
 			rs = stmt.executeQuery();
 			
 			while(rs.next()) {
-				profil = new Profil();
-				profil.setCodeProfil(rs.getInt("codeProfil"));
-				profil.setLibelle(rs.getString("libelle"));
+				promo = new Promotion();
+				promo.setCodePromo(rs.getInt("codeProfil"));
+				promo.setLibelle(rs.getString("libelle"));
 				
-				listeProfils.add(profil);
+				listePromos.add(promo);
 				
 			}
 			
@@ -135,8 +133,7 @@ private static final String SELECT_ALL_PROFIL = "SELECT p.codeProfil, p.libelle 
 			}
 		}
 		
-		return listeProfils;
+		return listePromos;
 	}
 
-	
 }

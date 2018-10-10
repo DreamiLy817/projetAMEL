@@ -23,7 +23,7 @@ private static Connection connection;
 	public static Connection jdbcConnexion() throws SQLException {
 		connection = null;
 		//driver se connecte à la bdd
-		connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1434;databaseName=BDD_QCM","sa", "Pa$$w0rd");
+		connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=BDD_QCM","sa", "Pa$$w0rd");
 
 		return connection;
 	}
