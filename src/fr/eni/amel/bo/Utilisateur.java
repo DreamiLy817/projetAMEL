@@ -96,7 +96,7 @@ public class Utilisateur {
 	}
 	
 	/**
-	 * @return the password
+	 * @return the profil
 	 */
 	public Profil getProfil() {
 		return profil;
@@ -110,7 +110,7 @@ public class Utilisateur {
 	}
 	
 	/**
-	 * @return the password
+	 * @return the promo
 	 */
 	public Promotion getPromo() {
 		return promo;

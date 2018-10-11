@@ -50,7 +50,7 @@ public class AppliUtilisateurDAL {
 			Utilisateur marion = DaoFactory.getUtilisateurDao().selectById(8);
 			System.out.println("Compte Marion avant modification :");
 			System.out.println(marion.getPrenom() + " " + marion.getNom() + " : mail = "+ marion.getEmail() + ", mot de passe = "+ marion.getPassword());
-			System.out.println("profil : " + marion.getProfil().getLibelle() + " et promo : " + marion.getPromo().getCodePromo());
+			System.out.println("profil : " + marion.getProfil().getLibelle() + " et promo : " + marion.getPromo().getLibelle());
 			
 			marion.setNom("De Oliveira");
 			marion.setPrenom("Bruno");

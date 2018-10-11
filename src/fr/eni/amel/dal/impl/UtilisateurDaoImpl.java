@@ -22,7 +22,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao{
 	private static final String INSERT_UTIL_QUERY = "INSERT INTO UTILISATEUR(nom, prenom, email, password, codeProfil, codePromo) VALUES(?,?,?,?,?,?)";
 	private static final String SELECT_UTIL_QUERY = "SELECT u.idUtilisateur, u.nom, u.prenom, u.email, u.password, u.codeProfil, u.codePromo  FROM UTILISATEUR u WHERE u.idUtilisateur = ?";
 	private static final String SELECT_ALL_UTILS = "SELECT u.idUtilisateur, u.nom, u.prenom, u.email, u.password, u.codeProfil, u.codePromo  FROM UTILISATEUR u";
-	private static final String UPDATE_UTIL_QUERY = "UPDATE UTILISATEUR SET nom=?, prenom=?, email=?, password=?, codeProfil=?; codePromo=? WHERE idUtilisateur = ?";
+	private static final String UPDATE_UTIL_QUERY = "UPDATE UTILISATEUR SET nom=?, prenom=?, email=?, password=?, codeProfil=?, codePromo=? WHERE idUtilisateur = ?";
 	private static final String DELETE_UTIL_QUERY = "DELETE FROM UTILISATEUR WHERE idUtilisateur = ?";
 	
 	private Connection connection;
@@ -105,6 +105,8 @@ public class UtilisateurDaoImpl implements UtilisateurDao{
 			stmt.setInt(5, utilisateur.getProfil().getCodeProfil());
 			stmt.setInt(6, utilisateur.getPromo().getCodePromo());
 			stmt.setInt(7, utilisateur.getIdUtilisateur());
+			
+			stmt.executeUpdate();
 			
 		} catch(SQLException e) {
 			throw new DaoException(e.getMessage(), e);
