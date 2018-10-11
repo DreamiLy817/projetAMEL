@@ -1,5 +1,6 @@
 package fr.eni.amel.test.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.amel.bo.Profil;
@@ -24,7 +25,9 @@ public class AppliPromoDAL {
 		}
 		
 		// test sélection de toutes les promotions
-		List<Promotion> listePromos;
+		System.out.println("Liste des promotions :");
+		List<Promotion> listePromos = new ArrayList<Promotion>();
+		
 		try {
 			listePromos = DaoFactory.getPromotionDao().selectAll();
 			

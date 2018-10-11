@@ -1,5 +1,6 @@
 package fr.eni.amel.test.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.amel.bo.Profil;
@@ -22,7 +23,9 @@ public class AppliProfilDAL {
 		}
 		
 		// test sélection de tous les profils
-		List<Profil> listeProfils;
+		System.out.println("Liste des profils : ");
+		List<Profil> listeProfils = new ArrayList<Profil>();
+		
 		try {
 			listeProfils = DaoFactory.getProfilDao().selectAll();
 			
