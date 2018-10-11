@@ -18,7 +18,7 @@ public class TestDaoImpl implements TestDao{
 	private static final String INSERT_TEST_QUERY = "INSERT INTO TEST(libelle, description, duree, seuil_haut, seuil_bas) VALUES(?,?,?,?,?)";
 	private static final String SELECT_TEST_QUERY = "SELECT idTest, libelle, description, duree, seuil_haut, seuil_bas FROM TEST  WHERE .idTest=?";
 	private static final String SELECT_ALL_TEST = "SELECT idTest,libelle, description, duree, seuil_haut, seuil_bas FROM TEST";
-	private static final String UPDATE_TEST_QUERY = "UPDATE TEST SET (libelle=? , description=?, duree=?, seuil_haut=?, seuil_bas=?) WHERE idTest =? ";
+	private static final String UPDATE_TEST_QUERY = "UPDATE TEST SET libelle=? , description=?, duree=?, seuil_haut=?, seuil_bas=? WHERE idTest =? ";
 	private static final String DELETE_TEST_QUERY = "DELETE FROM TEST WHERE idTest =? ";
 	
 	private Connection connection;
@@ -40,7 +40,6 @@ public class TestDaoImpl implements TestDao{
 			return connection;
 	}
 
-	
 	@Override
 	public Test insert(Test test) throws DaoException {
 		Connection cnx = null;
@@ -80,13 +79,17 @@ public class TestDaoImpl implements TestDao{
 			try {
 				if (rs != null) {
 					rs.close();
+					connection = null;
 				}
 				if (rqt != null) {
 					rqt.close();
+					connection = null;
 				}
 				if (cnx != null) {
 					cnx.close();
+					connection = null;
 				}
+			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -119,9 +122,11 @@ public class TestDaoImpl implements TestDao{
 			try {
 				if (rqt != null) {
 					rqt.close();
+					connection = null;
 				}
 				if (cnx != null) {
 					cnx.close();
+					connection = null;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -146,9 +151,11 @@ public class TestDaoImpl implements TestDao{
 			try {
 				if (rqt != null) {
 					rqt.close();
+					connection = null;
 				}
 				if (cnx != null) {
 					cnx.close();
+					connection = null;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -189,12 +196,15 @@ public class TestDaoImpl implements TestDao{
 			try {
 				if (rs != null) {
 					rs.close();
+					connection = null;
 				}
 				if (rqt != null) {
 					rqt.close();
+					connection = null;
 				}
 				if (cnx != null) {
 					cnx.close();
+					connection = null;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -233,12 +243,15 @@ public class TestDaoImpl implements TestDao{
 			try {
 				if (rs != null){
 					rs.close();
+					connection = null;
 				}
 				if (rqt != null){
 					rqt.close();
+					connection = null;
 				}
 				if(cnx!=null){
 					cnx.close();
+					connection = null;
 				}
 			} catch (SQLException e) {
 				throw new DaoException(e.getMessage(), e);
