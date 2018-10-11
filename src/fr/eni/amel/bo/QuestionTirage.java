@@ -1,26 +1,29 @@
 package fr.eni.amel.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class QuestionTirage {
 	
 	private boolean estmarquee;
 	private Question question;
-	private int numordre;
+	private Integer numordre;
 	private Epreuve epreuve;
-	private Proposition proposition;
+	private List<Proposition> listproposition;
 	
 	//Constructeur
 	
 	public QuestionTirage() {
-		
+		this.listproposition = new ArrayList<Proposition>();
 	}
 	
 	public QuestionTirage(boolean estmarquee, Question question, int numordre, Epreuve epreuve,
-			Proposition proposition) {
+			List listproposition) {
 		this.estmarquee = estmarquee;
 		this.question = question;
 		this.numordre = numordre;
 		this.epreuve = epreuve;
-		this.proposition = proposition;
+		this.listproposition = listproposition;
 	}
 
 	//Getter
@@ -33,7 +36,7 @@ public class QuestionTirage {
 		return question;
 	}
 
-	public int getNumordre() {
+	public Integer getNumordre() {
 		return numordre;
 	}
 
@@ -41,8 +44,8 @@ public class QuestionTirage {
 		return epreuve;
 	}
 
-	public Proposition getProposition() {
-		return proposition;
+	public List getProposition() {
+		return this.listproposition;
 	}
 	
 	
@@ -56,7 +59,7 @@ public class QuestionTirage {
 		this.question = question;
 	}
 
-	public void setNumordre(int numordre) {
+	public void setNumordre(Integer numordre) {
 		this.numordre = numordre;
 	}
 
@@ -64,8 +67,20 @@ public class QuestionTirage {
 		this.epreuve = epreuve;
 	}
 
-	public void setProposition(Proposition proposition) {
-		this.proposition = proposition;
+	public void setListProposition(List listproposition) {
+		this.listproposition = listproposition;
+	}
+	
+	//array List
+		
+	public Proposition getUneProposition(Integer index)
+	{
+		return this.listproposition.get(index);
+	}
+	
+	public void addProposition(Proposition proposition)
+	{
+		this.listproposition.add(proposition);
 	}
 	
 

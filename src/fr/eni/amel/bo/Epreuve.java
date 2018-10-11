@@ -13,10 +13,10 @@ import java.util.Date;
 
 public class Epreuve {
 
-	private int idEpreuve;
+	private Integer idEpreuve;
 	private Date dateDebutValidite;
 	private Date dateFinValidite;
-	private int tempsEcoule;
+	private Integer tempsEcoule;
 	private String etat;
 	private float note_obtenue;
 	private String niveau_obtenu;
@@ -48,7 +48,7 @@ public class Epreuve {
 	
 	//Getter
 
-	public int getIdEpreuve() {
+	public Integer getIdEpreuve() {
 		return idEpreuve;
 	}
 
@@ -63,7 +63,7 @@ public class Epreuve {
 	}
 
 
-	public int getTempsEcoule() {
+	public Integer getTempsEcoule() {
 		return tempsEcoule;
 	}
 
@@ -96,7 +96,7 @@ public class Epreuve {
 	//Setter
 	
 	
-	public void setIdEpreuve(int idEpreuve) {
+	public void setIdEpreuve(Integer idEpreuve) {
 		this.idEpreuve = idEpreuve;
 	}
 
@@ -108,7 +108,7 @@ public class Epreuve {
 		this.dateFinValidite = dateFinValidite;
 	}
 
-	public void setTempsEcoule(int tempsEcoule) {
+	public void setTempsEcoule(Integer tempsEcoule) {
 		this.tempsEcoule = tempsEcoule;
 	}
 
@@ -148,9 +148,14 @@ public class Epreuve {
 		this.listeQuestionTirage = (ArrayList<QuestionTirage>)list;
 	}
 	
-	public QuestionTirage getUnQuestionTirage(int index)
+	public QuestionTirage getUnQuestionTirage(Integer index)
 	{
 		return this.listeQuestionTirage.get(index);
+	}
+	
+	public void addQuestionTirage(QuestionTirage questiontirage)
+	{
+		this.listeQuestionTirage.add(questiontirage);
 	}
 
 	@Override
