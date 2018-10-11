@@ -90,7 +90,7 @@ public class Question {
 	@Override
 	public String toString() {
 		return String.format("Question [idQuestion=%s, enonce=%s, media=%s, points=%s, theme=%s, listePropositions=%s]",
-				idQuestion, enonce, media, points, theme, listePropositions);
+				idQuestion, enonce, media, points, theme,"\n"+ listePropositions+"\n");
 	}
 	
 
