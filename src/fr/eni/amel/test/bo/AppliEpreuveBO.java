@@ -23,6 +23,7 @@ public class AppliEpreuveBO {
 				
 				// Creer un nouveau test 
 				Test test1 = new Test("JAVA","test sur le language de programmation JAVA", 60, 80, 20);
+				test1.setIdTest(1);
 				System.out.println(test1);
 				
 				Promotion promo = new Promotion(1, "CDI-00");
@@ -43,6 +44,8 @@ public class AppliEpreuveBO {
 				try {
 					List<Epreuve> epreuves = epreuvedao.selectAll();
 					
+					System.out.println(" ");
+					System.out.println(" ");
 					System.out.println("Les epreuves : ");
 					
 					for (Epreuve uneEpreuve: epreuves) {
@@ -54,8 +57,22 @@ public class AppliEpreuveBO {
 				}
 				
 				
-	}
-	
-	
+				try {
+					epreuve = (Epreuve)epreuvedao.selectById(1);
+					epreuve.setEtat("TE");
+					epreuvedao.update(epreuve);
+					
+					epreuve = (Epreuve)epreuvedao.selectById(1);
+					
+					System.out.println(" ");
+					System.out.println(" ");
+					System.out.println("Nouvelle epreuve : ");				
 
+					System.out.println(epreuve);
+					
+				} catch (DaoException e) {
+					e.printStackTrace();
+				}
+		}
+	
 }

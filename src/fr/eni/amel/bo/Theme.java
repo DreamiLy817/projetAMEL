@@ -34,6 +34,11 @@ public class Theme {
 	 * @param libelle
 	 * @param listeQuestions
 	 */
+	
+	public Theme() {
+		super();
+	}
+	
 	public Theme(int idTheme, String libelle) {
 		super();
 		setIdTheme(idTheme);
