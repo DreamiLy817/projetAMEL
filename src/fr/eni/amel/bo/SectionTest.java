@@ -2,6 +2,16 @@ package fr.eni.amel.bo;
 
 public class SectionTest {
 	private int nbQuestionsATirer;
+	
+	private Theme theme;
+	
+	public Theme getTheme() {
+		return theme;
+	}
+
+	public void setTheme(Theme theme) {
+		this.theme = theme;
+	}
 
 	// getter et setter
 	public int getNbQuestionsATirer() {
