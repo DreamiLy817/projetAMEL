@@ -11,6 +11,7 @@ import fr.eni.amel.bo.Epreuve;
 import fr.eni.amel.bo.Question;
 import fr.eni.amel.bo.QuestionTirage;
 import fr.eni.amel.dal.QuestionTirageDAO;
+import fr.eni.amel.test.bo.ConnectBDD;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
 
@@ -20,7 +21,7 @@ private static final String insert 	= "INSERT INTO QUESTION_TIRAGE (estMarquee, 
 private static final String select_all 	= "SELECT * FROM QUESTION_TIRAGE ";
 private static final String select_epreuve 	= "SELECT * FROM QUESTION_TIRAGE WHERE idEpreuve = ?";
 
-
+private Connection connection;
 private static QuestionTirageDaoImpl instance;
 
 public static QuestionTirageDaoImpl getInstance() {
@@ -28,6 +29,15 @@ public static QuestionTirageDaoImpl getInstance() {
 		instance = new QuestionTirageDaoImpl();
 	}
 	return instance;
+}
+
+public Connection getConnection() throws SQLException 
+{
+	//test la connexion si null
+	if(connection == null) {
+		connection = ConnectBDD.jdbcConnexion();
+	}
+		return connection;
 }
 
 @Override
@@ -38,7 +48,7 @@ public static QuestionTirageDaoImpl getInstance() {
 		QuestionTirage tirage = (QuestionTirage)element;
 		
 		try{
-			cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
 			rqt=cnx.prepareStatement(insert);
 			rqt.setBoolean(1, tirage.isEstmarquee());
 			rqt.setInt(2,tirage.getQuestion().getIdQuestion());
@@ -78,7 +88,7 @@ public static QuestionTirageDaoImpl getInstance() {
 		List<QuestionTirage> question_tirages = new ArrayList<QuestionTirage>();
 		QuestionTirage question_tirage = null;
 		try{
-			cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
 			rqt = cnx.prepareStatement(select_all);
 			rs=rqt.executeQuery();
 			
@@ -119,7 +129,7 @@ public static QuestionTirageDaoImpl getInstance() {
 		List<QuestionTirage> question_tirages = new ArrayList<QuestionTirage>();
 		QuestionTirage question_tirage = null;
 		try{
-			cnx = MSSQLConnectionFactory.get();
+			cnx = getConnection();
 			rqt = cnx.prepareStatement(select_epreuve);
 			rqt.setInt(1, (int)id);
 			rs=rqt.executeQuery();

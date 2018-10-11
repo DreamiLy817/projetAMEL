@@ -67,6 +67,7 @@ public class QuestionDaoImpl implements QuestionDao {
 			throw new DaoException(e.getMessage(), e);
 		} finally {
 			ResourceUtil.safeClose(resultSet, statement, connection);
+			this.connection = null;
 		}
 
 		return question;
@@ -90,7 +91,8 @@ public class QuestionDaoImpl implements QuestionDao {
 		} catch (SQLException e) {
 			throw new DaoException(e.getMessage(), e);
 		} finally {
-			ResourceUtil.safeClose(resultSet, statement, connection);
+			ResourceUtil.safeClose(resultSet, statement,connection);
+			this.connection = null;
 		}
 
 	}
@@ -109,7 +111,8 @@ public class QuestionDaoImpl implements QuestionDao {
 		} catch (SQLException e) {
 			throw new DaoException(e.getMessage(), e);
 		} finally {
-			ResourceUtil.safeClose(resultSet, statement, connection);
+			ResourceUtil.safeClose(resultSet, statement,connection);
+			this.connection = null;
 		}
 
 	}
@@ -146,7 +149,8 @@ public class QuestionDaoImpl implements QuestionDao {
 		} catch (SQLException e) {
 			throw new DaoException(e.getMessage(), e);
 		} finally {
-			ResourceUtil.safeClose(resultSet, statement, connection);
+			ResourceUtil.safeClose(resultSet, statement,connection);
+			this.connection = null;
 		}
 
 		return question;
@@ -185,7 +189,8 @@ public class QuestionDaoImpl implements QuestionDao {
 		} catch (SQLException e) {
 			throw new DaoException(e.getMessage(), e);
 		} finally {
-			ResourceUtil.safeClose(resultSet, statement, connection);
+			ResourceUtil.safeClose(resultSet, statement,connection);
+			this.connection = null;
 		}
 
 		return listeQuestions;
