@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.amel.bo.SectionTest;
 import fr.eni.amel.bo.Test;
 import fr.eni.amel.dal.TestDao;
 import fr.eni.amel.test.bo.ConnectBDD;
@@ -187,7 +188,12 @@ public class TestDaoImpl implements TestDao{
 				test.setSeuil_haut(rs.getInt("seuil_haut"));
 				test.setSeuil_bas(rs.getInt("seuil_bas"));
 				test.setDuree(rs.getInt("duree"));
-			
+				
+				//Ajouter sectionTest
+				SectionTestDaoImpl sectionTestDao = SectionTestDaoImpl.getInstance();
+				List<SectionTest> listeSectionTest = (List<SectionTest>) sectionTestDao.selectByTest(id);
+				test.setListeSectionTests(listeSectionTest);
+	
 			}
 
 		}  catch (SQLException e) {

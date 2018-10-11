@@ -1,6 +1,7 @@
 package fr.eni.amel.bo;
 
 public class SectionTest {
+	private int idSection;
 	private int nbQuestionsATirer;
 
 	// getter et setter
@@ -11,14 +12,36 @@ public class SectionTest {
 	public void setNbQuestionsATirer(int nbQuestionsATirer) {
 		this.nbQuestionsATirer = nbQuestionsATirer;
 	}
+	
+	public int getIdSection() {
+		return idSection;
+	}
+
+	public void setIdSection(int idSection) {
+		this.idSection = idSection;
+	}
 
 	//constructeur
+	
+	public SectionTest() {
+	}
+	
 	/**
 	 * @param nbQuestionsATirer
 	 */
 	public SectionTest(int nbQuestionsATirer) {
 		super();
 		setNbQuestionsATirer(nbQuestionsATirer);
+	}
+
+	/**
+	 * @param idSection
+	 * @param nbQuestionsATirer
+	 */
+	public SectionTest(int idSection, int nbQuestionsATirer) {
+		super();
+		this.idSection = idSection;
+		this.nbQuestionsATirer = nbQuestionsATirer;
 	}
 
 	@Override
