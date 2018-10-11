@@ -241,6 +241,11 @@ public class TestDaoImpl implements TestDao{
 						rs.getInt("seuil_haut"),
 						rs.getInt("seuil_bas"));
 				
+				//Ajouter sectionTest
+				SectionTestDaoImpl sectionTestDao = SectionTestDaoImpl.getInstance();
+				List<SectionTest> listeSectionTest = (List<SectionTest>) sectionTestDao.selectByTest(test.getIdTest());
+				test.setListeSectionTests(listeSectionTest);
+				
 				listeTest.add(test);
 			}
 		} catch (SQLException e) {

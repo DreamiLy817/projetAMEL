@@ -20,10 +20,10 @@ import fr.eni.tp.web.common.dal.exception.DaoException;
 
 
 public class SectionTestDaoImpl implements SectionTestDao {
-	private static final String SELECT_BY_TEST = "SELECT nbQuestion, idTest, idTheme  FROM SECTION_TEST WHERE idTest =? ";
+	private static final String SELECT_BY_TEST = "SELECT nbQuestionsATirer, idTest, idTheme  FROM SECTION_TEST WHERE idTest =? ";
 	
-	private static final String SELECT__BY_THEME = "SELECT nbQuestion, idTest, idTheme FROM SECTION_TEST WHERE idTheme=?";
-	private static final String SELECT_ALL_SECTION_TEST = "SELECT nbQuestion, idTest, idTheme FROM SECTION_TEST";
+	private static final String SELECT__BY_THEME = "SELECT nbQuestionsATirer, idTest, idTheme FROM SECTION_TEST WHERE idTheme=?";
+	private static final String SELECT_ALL_SECTION_TEST = "SELECT nbQuestionsATirer, idTest, idTheme FROM SECTION_TEST";
 
 	
 	private Connection connection;
