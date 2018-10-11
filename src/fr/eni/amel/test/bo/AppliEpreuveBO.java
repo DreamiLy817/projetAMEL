@@ -58,35 +58,21 @@ public class AppliEpreuveBO {
 				
 				
 				try {
-					List<Epreuve> epreuves = epreuvedao.selectAll();
+					epreuve = (Epreuve)epreuvedao.selectById(1);
+					epreuve.setEtat("TE");
+					epreuvedao.update(epreuve);
+					
+					epreuve = (Epreuve)epreuvedao.selectById(1);
 					
 					System.out.println(" ");
 					System.out.println(" ");
-					System.out.println("Les epreuves : ");
-					
-					for (Epreuve uneEpreuve: epreuves) {
-						System.out.println(uneEpreuve);
-					}
+					System.out.println("Nouvelle epreuve : ");				
+
+					System.out.println(epreuve);
 					
 				} catch (DaoException e) {
 					e.printStackTrace();
 				}
-				
-				/*try {
-					System.out.println(" ");
-					System.out.println(" ");
-					System.out.println("Insert : ");
-					Epreuve newepreuves = (Epreuve) epreuvedao.insert(epreuve);
-					System.out.println("Insert effectué.");										
-				} catch (DaoException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
-				
-				
-				
-	}
+		}
 	
-	
-
 }

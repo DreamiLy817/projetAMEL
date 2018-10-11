@@ -21,6 +21,7 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 
 	private static final String select_all = "SELECT * FROM EPREUVE";
 	private static final String select_id 	= "SELECT * FROM EPREUVE WHERE idEpreuve = ?";
+	private static final String select_utilisateur 	= "SELECT * FROM EPREUVE WHERE idUtilisateur = ?";
 	private static final String update_id 	= "UPDATE EPREUVE SET dateDedutValidite = ?, dateFinValidite = ?, tempsEcoule = ?, etat = ?, note_obtenue = ? WHERE idEpreuve = ?";
 	private static final String insert 	= "INSERT INTO EPREUVE (dateDedutValidite, dateFinValidite, tempsEcoule, etat, note_obtenue, niveau_obtenu, idTest, idUtilisateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	
@@ -84,6 +85,7 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 			rqt.setInt(3, epreuve.getTempsEcoule());
 			rqt.setString(4, epreuve.getEtat());
 			rqt.setFloat(5, epreuve.getNote_obtenue());
+			rqt.setFloat(6, epreuve.getIdEpreuve());
 
 			rqt.executeUpdate();
 		} catch (SQLException e) {
@@ -105,14 +107,61 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 		try{	
 			cnx = getConnection();
 			rqt = cnx.prepareStatement(select_id);
-			rqt.setInt(1, 1);
+			rqt.setInt(1, (int)id);
 			rs=rqt.executeQuery();
 			// SI on trouve au moins 1 résultat, on prend le 1er pour mettre à jour les informations de l'animateur utilis� pour la recherche.
 			if (rs.next()){
 				epreuve = new Epreuve();
 				epreuve.setIdEpreuve(rs.getInt("idEpreuve"));
-				epreuve.setDateDebutValidite(rs.getDate("dateDebutValidite"));
-				epreuve.setDateDebutValidite(rs.getDate("dateFinValidite"));
+				epreuve.setDateDebutValidite(rs.getDate("dateDedutValidite"));
+				epreuve.setDateFinValidite(rs.getDate("dateFinValidite"));
+				epreuve.setTempsEcoule(rs.getInt("tempsEcoule"));
+				epreuve.setEtat(rs.getString("etat"));
+				epreuve.setNote_obtenue(rs.getInt("note_obtenue"));
+				epreuve.setNiveau_obtenu(rs.getString("niveau_obtenu"));
+				
+				//Ajouter user
+				UtilisateurDaoImpl utilisateurDao = UtilisateurDaoImpl.getInstance();
+				Utilisateur utilisateur = utilisateurDao.selectById(rs.getInt("idUtilisateur"));
+				epreuve.setUtilisateur(utilisateur);
+				
+				//Ajouter test
+				TestDaoImpl TestDao = TestDaoImpl.getInstance();
+				Test test = TestDao.selectById(rs.getInt("idTest"));
+				epreuve.setTest(test);
+				
+				//Ajouter Questions Tirages
+				QuestionTirageDaoImpl questionDao = QuestionTirageDaoImpl.getInstance();
+				List<QuestionTirage> question_tirages = (List)questionDao.selectByIdEpreuve(id);
+				epreuve.setlisteQuestionTirage(question_tirages);
+			}
+			
+		}catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		
+		return epreuve;
+	}
+	
+	
+
+	public Object selectByUtilisateur(Object id) throws DaoException {
+		
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		Epreuve epreuve = null;
+		try{	
+			cnx = getConnection();
+			rqt = cnx.prepareStatement(select_utilisateur);
+			rqt.setInt(1, (int)id);
+			rs=rqt.executeQuery();
+			// SI on trouve au moins 1 résultat, on prend le 1er pour mettre à jour les informations de l'animateur utilis� pour la recherche.
+			if (rs.next()){
+				epreuve = new Epreuve();
+				epreuve.setIdEpreuve(rs.getInt("idEpreuve"));
+				epreuve.setDateDebutValidite(rs.getDate("dateDedutValidite"));
+				epreuve.setDateFinValidite(rs.getDate("dateFinValidite"));
 				epreuve.setTempsEcoule(rs.getInt("tempsEcoule"));
 				epreuve.setEtat(rs.getString("etat"));
 				epreuve.setNote_obtenue(rs.getInt("note_obtenue"));
@@ -161,21 +210,21 @@ public class EpreuveDaoImpl implements EpreuveDAO{
 				epreuve = new Epreuve();
 				epreuve.setIdEpreuve(rs.getInt("idEpreuve"));
 				epreuve.setDateDebutValidite(rs.getDate("dateDedutValidite"));
-				epreuve.setDateDebutValidite(rs.getDate("dateFinValidite"));
+				epreuve.setDateFinValidite(rs.getDate("dateFinValidite"));
 				epreuve.setTempsEcoule(rs.getInt("tempsEcoule"));
 				epreuve.setEtat(rs.getString("etat"));
 				epreuve.setNote_obtenue(rs.getInt("note_obtenue"));
 				epreuve.setNiveau_obtenu(rs.getString("niveau_obtenu"));
 				
 				//Ajouter user
-				//UtilisateurDaoImpl utilisateurDao = UtilisateurDaoImpl.getInstance();
-				//Utilisateur utilisateur = utilisateurDao.selectById(rs.getInt("idUtilisateur"));
-				//epreuve.setUtilisateur(utilisateur);
+				UtilisateurDaoImpl utilisateurDao = UtilisateurDaoImpl.getInstance();
+				Utilisateur utilisateur = utilisateurDao.selectById(rs.getInt("idUtilisateur"));
+				epreuve.setUtilisateur(utilisateur);
 				
 				//Ajouter test
-				//TestDaoImpl TestDao = TestDaoImpl.getInstance();
-				//Test test = TestDao.selectById(rs.getInt("idTest"));
-				//epreuve.setTest(test);
+				TestDaoImpl TestDao = TestDaoImpl.getInstance();
+				Test test = TestDao.selectById(rs.getInt("idTest"));
+				epreuve.setTest(test);
 				
 				epreuves.add(epreuve);
 			}
