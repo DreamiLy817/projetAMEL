@@ -9,6 +9,7 @@ import java.util.List;
 
 import fr.eni.amel.bo.Proposition;
 import fr.eni.amel.dal.PropositionDao;
+import fr.eni.amel.test.bo.ConnectBDD;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
 import fr.eni.tp.web.common.util.ResourceUtil;
@@ -19,7 +20,9 @@ public class PropositionDaoImpl implements PropositionDao {
 	private static final String SELECT_PROPOSITION_QUERY ="SELECT idProposition, enonce, estBonne FROM PROPOSITION WHERE idProposition=?";
 	
 	private static PropositionDaoImpl instance;
-
+	
+	private Connection connection;
+	
 	public static PropositionDaoImpl getInstance() {
 		if (instance == null) {
 			instance = new PropositionDaoImpl();
@@ -27,6 +30,13 @@ public class PropositionDaoImpl implements PropositionDao {
 		return instance;
 	}
 
+	public Connection getConnection() throws SQLException {
+		// test la connexion si null
+		if (connection == null) {
+			connection = ConnectBDD.jdbcConnexion();
+		}
+		return connection;
+	}
 	@Override
 	public Proposition insert(Proposition element) throws DaoException {
 		// TODO Auto-generated method stub
@@ -52,7 +62,8 @@ public class PropositionDaoImpl implements PropositionDao {
 		ResultSet resultSet = null;
 		Proposition proposition = null;
 		try{
-			connection = MSSQLConnectionFactory.get();
+			//connection = MSSQLConnectionFactory.get();
+			connection = getConnection();
 			statement = connection.prepareStatement(SELECT_PROPOSITION_QUERY);
 			resultSet = statement.executeQuery();
 			
@@ -67,6 +78,7 @@ public class PropositionDaoImpl implements PropositionDao {
 		}
 		finally{
 			ResourceUtil.safeClose(resultSet, statement, connection);
+			this.connection = null;
 		}
 		return proposition;
 	}
@@ -86,7 +98,8 @@ public class PropositionDaoImpl implements PropositionDao {
 		Proposition proposition = null;
 
 		try {
-			connection = MSSQLConnectionFactory.get();
+			//connection = MSSQLConnectionFactory.get();
+			connection = getConnection();
 			statement = connection.prepareStatement(SELECT_ALL_PROPOSITIONS_BY_QUESTION);
 			statement.setInt(1, idQuestion);
 
@@ -102,7 +115,8 @@ public class PropositionDaoImpl implements PropositionDao {
 		} catch (SQLException e) {
 			throw new DaoException(e.getMessage(), e);
 		} finally {
-			ResourceUtil.safeClose(resultSet, statement, connection);
+			ResourceUtil.safeClose(resultSet, statement,connection);
+			this.connection = null;
 		}
 
 		return listePropositions;
