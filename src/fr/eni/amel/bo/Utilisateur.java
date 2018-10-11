@@ -123,6 +123,7 @@ public class Utilisateur {
 		this.promo = promo;
 	}
 
+	
 	/** 
 	 * Méthode toString de Utilisateur
 	 * @see java.lang.Object#toString()
