@@ -20,6 +20,18 @@ public class SectionTest {
 		super();
 		setNbQuestionsATirer(nbQuestionsATirer);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SectionTest [nbQuestionsATirer=");
+		builder.append(nbQuestionsATirer);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+	
 	
 	
 	
