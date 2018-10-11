@@ -30,7 +30,7 @@ public class DaoFactory {
 		return ThemeDaoImpl.getInstance();
 		
 	}
-	public static SectionTestDao getSectionDao() {
+	public static SectionTestDao getSectionTestDao() {
 		return SectionTestDaoImpl.getInstance();
 	}
 
