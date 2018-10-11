@@ -54,7 +54,7 @@ public class Proposition {
 	@Override
 	public String toString() {
 		return String.format("Proposition [idProposition=%s, enonce=%s, estBonne=%s, question=%s]", idProposition,
-				enonce, estBonne, question);
+				enonce, estBonne, question+"\n");
 	}
 
 }
