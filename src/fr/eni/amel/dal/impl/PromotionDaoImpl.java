@@ -111,7 +111,7 @@ public class PromotionDaoImpl implements PromotionDao{
 			
 			while(rs.next()) {
 				promo = new Promotion();
-				promo.setCodePromo(rs.getInt("codeProfil"));
+				promo.setCodePromo(rs.getInt("codePromo"));
 				promo.setLibelle(rs.getString("libelle"));
 				
 				listePromos.add(promo);
