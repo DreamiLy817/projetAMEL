@@ -18,6 +18,8 @@ import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
 public class QuestionTirageDaoImpl implements QuestionTirageDAO{
 	
 private static final String insert 	= "INSERT INTO QUESTION_TIRAGE (estMarquee, idQuestion, numordre, idEpreuve) VALUES (?, ?, ?, ?)";
+private static final String insert_reponse 	= "INSERT INTO REPONSE_TIRAGE (idProposition, idQuestion, idEpreuve) VALUES (?, ?, ?)";
+private static final String delete_reponse 	= "DELETE FROM REPONSE_TIRAGE WHERE idProposition = ? and  idQuestion = ? and idEpreuve = ?)";
 private static final String select_all 	= "SELECT * FROM QUESTION_TIRAGE ";
 private static final String select_epreuve 	= "SELECT * FROM QUESTION_TIRAGE WHERE idEpreuve = ?";
 
@@ -159,5 +161,41 @@ public Connection getConnection() throws SQLException
 			throw new DaoException(e.getMessage(), e);
 		}
 		return question_tirages;
-	} 	
+	}
+	
+	public void createReponse(Integer idEpreuve, Integer idQuestion,Integer idProposition) throws DaoException {
+		Connection cnx=null;
+		PreparedStatement rqt=null;
+		
+		try{
+			cnx = getConnection();
+			rqt=cnx.prepareStatement(insert_reponse);
+			rqt.setInt(1, idProposition);
+			rqt.setInt(2,idQuestion);
+			rqt.setInt(3, idEpreuve);
+			rqt.executeUpdate();
+		}catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+	}
+	
+	public void deleteReponse(Integer idEpreuve, Integer idQuestion,Integer idProposition) throws DaoException {
+		Connection cnx=null;
+		PreparedStatement rqt=null;
+		
+		try{
+			cnx = getConnection();
+			rqt=cnx.prepareStatement(delete_reponse);
+			rqt.setInt(1, idProposition);
+			rqt.setInt(2,idQuestion);
+			rqt.setInt(3, idEpreuve);
+			rqt.executeUpdate();
+		}catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		
+	}
+	
+	
+	
 }
